@@ -3,6 +3,7 @@ FROM node:10.16-slim
 WORKDIR /app
 
 ARG DEBIAN_FRONTEND=noninteractive
+ENV NG_CLI_ANALYTICS=ci
 
 # Download and setup google chrome repository
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
