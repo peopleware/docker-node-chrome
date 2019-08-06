@@ -13,5 +13,8 @@ RUN apt-get update
 RUN apt-get install wget curl google-chrome-stable -y
 RUN apt-get upgrade -y
 
+# Make sure we run the latest npm version
+RUN npm -g update
+
 # No entry point, run it your build/tests via a script, cmd example:
 # docker run -it -v $(pwd):/app --entrypoint ./<your_node_npm_script>.sh <container_name>
