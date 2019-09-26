@@ -14,8 +14,9 @@ RUN apt-get update
 RUN apt-get install wget curl google-chrome-stable -y
 RUN apt-get upgrade -y
 
-# Make sure we run the latest npm version
+# Make sure we run the latest npm version and install the latest angular/cli version
 RUN npm -g update
+RUN npm install -g @angular/cli
 
 # No entry point, run it your build/tests via a script, cmd example:
 # docker run -it -v $(pwd):/app --entrypoint ./<your_node_npm_script>.sh <container_name>
