@@ -1,4 +1,4 @@
-FROM node:10.16-slim
+FROM node:10.16-buster-slim
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ ENV NG_CLI_ANALYTICS=ci
 
 # Download and setup google chrome repository
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
 
 # Perform package management for image usage to build/test angular apps
 RUN apt-get update
