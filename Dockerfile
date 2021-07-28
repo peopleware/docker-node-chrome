@@ -1,9 +1,13 @@
-FROM node:10.16-buster-slim
+FROM node:14.17.3-buster-slim
 
 WORKDIR /app
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV NG_CLI_ANALYTICS=ci
+
+# Make sure wget and curl are installed
+RUN apt-get update
+RUN apt-get install wget curl gnupg -y
 
 # Download and setup google chrome repository
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -11,7 +15,7 @@ RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/so
 
 # Perform package management for image usage to build/test angular apps
 RUN apt-get update
-RUN apt-get install wget curl google-chrome-stable -y
+RUN apt-get install google-chrome-stable -y
 RUN apt-get upgrade -y
 
 # Make sure we run the latest npm version and install the latest angular/cli version
