@@ -1,4 +1,4 @@
-FROM node:16.20.2-buster-slim
+FROM node:18.17.1-buster-slim
 
 WORKDIR /app
 
@@ -19,7 +19,7 @@ RUN apt-get install google-chrome-stable -y
 RUN apt-get upgrade -y
 
 # Make sure we run the latest npm version and install the latest angular/cli version
-RUN npm -g install npm@8.19.4
+RUN npm -g install npm@9.6.7
 RUN npm install -g @angular/cli
 
 # No entry point, run it your build/tests via a script, cmd example:
