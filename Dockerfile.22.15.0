@@ -4,6 +4,9 @@ WORKDIR /app
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV NG_CLI_ANALYTICS=ci
+ENV XDG_DATA_HOME=/tmp/.chromium
+ENV XDG_CONFIG_HOME=/tmp/.chromium
+ENV XDG_CACHE_HOME=/tmp/.chromium
 
 # Make sure wget and curl are installed
 RUN apt-get update
