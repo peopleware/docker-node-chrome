@@ -1,0 +1,51 @@
+name: Publish Docker image
+
+on:
+  workflow_dispatch:
+    inputs:
+      VERSION:
+        description: 'Version to publish'
+        type: string
+
+jobs:
+  push_to_registries:
+    name: Push Docker image to Docker.io and Amazon ECR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v5
+      - name: Build image
+        run: |
+          docker build --platform=linux/amd64 -t ppwcode/node-chrome:${{ inputs.VERSION }} -f Dockerfile.${{ inputs.VERSION }} .
+      - name: Add docker.io tags
+        run: |
+          docker tag ppwcode/node-chrome:${{ inputs.VERSION }} docker.io/ppwcode/node-chrome:${{ inputs.VERSION }}
+          docker tag ppwcode/node-chrome:${{ inputs.VERSION }} docker.io/ppwcode/node-chrome:latest
+      - name: Add Amazon ECR tags
+        run: |
+          docker tag ppwcode/node-chrome:${{ inputs.VERSION }} public.ecr.aws/peopleware/ppwcode/node-chrome:${{ inputs.VERSION }}
+          docker tag ppwcode/node-chrome:${{ inputs.VERSION }} public.ecr.aws/peopleware/ppwcode/node-chrome:latest
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PAT }}
+      - name: Push to docker.io
+        run: |
+          docker push docker.io/ppwcode/node-chrome:${{ inputs.VERSION }}
+          docker push docker.io/ppwcode/node-chrome:latest
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: eu-west-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: Push to AWS ECR
+        run: |
+          docker push public.ecr.aws/peopleware/ppwcode/node-chrome:${{ inputs.VERSION }}
+          docker push public.ecr.aws/peopleware/ppwcode/node-chrome:latest
