@@ -8,7 +8,7 @@ docker build --platform=linux/amd64 -t ppwcode/node-chrome:$VERSION -f Dockerfil
 # Add docker.io tags
 docker tag ppwcode/node-chrome:$VERSION docker.io/ppwcode/node-chrome:$VERSION
 docker tag ppwcode/node-chrome:$VERSION docker.io/ppwcode/node-chrome:latest
-# Add AWS ECR tags
+# Add Amazon ECR tags
 docker tag ppwcode/node-chrome:$VERSION public.ecr.aws/peopleware/ppwcode/node-chrome:$VERSION
 docker tag ppwcode/node-chrome:$VERSION public.ecr.aws/peopleware/ppwcode/node-chrome:latest
 
@@ -18,8 +18,8 @@ docker login
 docker push docker.io/ppwcode/node-chrome:$VERSION
 docker push docker.io/ppwcode/node-chrome:latest
 
-# Login to AWS ECR
+# Login to Amazon ECR
 aws --profile peopleware ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/peopleware
-# Push to AWS ECR
+# Push to Amazon ECR
 docker push public.ecr.aws/peopleware/ppwcode/node-chrome:$VERSION
 docker push public.ecr.aws/peopleware/ppwcode/node-chrome:latest
