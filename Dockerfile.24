@@ -1,0 +1,3 @@
+FROM timbru31/node-chrome:24-slim
+
+WORKDIR /app
