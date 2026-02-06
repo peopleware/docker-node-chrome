@@ -1,3 +1,8 @@
 FROM timbru31/node-chrome:24-slim
 
 WORKDIR /app
+
+ENV NG_CLI_ANALYTICS=ci
+ENV XDG_DATA_HOME=/tmp/.chromium
+ENV XDG_CONFIG_HOME=/tmp/.chromium
+ENV XDG_CACHE_HOME=/tmp/.chromium
