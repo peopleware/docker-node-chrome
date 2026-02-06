@@ -22,7 +22,6 @@ RUN apt install -y google-chrome-stable
 RUN apt upgrade -y
 
 # Make sure we run the latest npm version and install the latest angular/cli version
-RUN npm -g install npm@10.9.3
 RUN npm install -g @angular/cli
 
 # No entry point, run it your build/tests via a script, cmd example:
